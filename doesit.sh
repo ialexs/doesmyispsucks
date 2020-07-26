@@ -5,7 +5,9 @@
 # Using Speedtest.net CLI
 # https://www.speedtest.net/apps/cli
 #
-# Crontab it. Use `speedtest_log.json`, graph it, mail it to your ISP, publish it, etc, whatever.
+# Crontab it. 
+#
+# Use `speedtest_log.json`, graph it, mail it to your ISP, publish it, etc, whatever.
 #
 # > `ialexs`
 
@@ -18,8 +20,8 @@ speedtesting () {
 	# Empty previous test result
 	cat /dev/null > $speedtest_result
 
-	# List your target server by `speedtest -L`
-	# 6612 = FirstMedia, Jakarta
+	# Manually define targer server with `-s`
+	# 6612 = FirstMedia, Jakarta, Indonesia
 	#speedtest -s 6612 -f json > $speedtest_result
 	speedtest -f json > $speedtest_result
 
