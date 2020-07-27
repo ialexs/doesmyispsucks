@@ -11,7 +11,7 @@
 #
 # > `ialexs`
 
-date=`date +"%F %T"`
+date=`date --utc +%FT%TZ`
 
 speedtest_log='speedtest_log.json'
 speedtest_result='speedtest_result'
@@ -30,7 +30,7 @@ speedtesting () {
 	       cat $speedtest_result | tee -a $speedtest_log
 	       exit
        else
-	       echo $date", connection failed" | tee -a $speedtest_log
+	       echo "{\"type\":\"failed result\",\"timestamp\":\"$date\"}" | tee -a $speedtest_log
 	fi
        }
 
