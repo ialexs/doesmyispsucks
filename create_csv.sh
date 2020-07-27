@@ -18,11 +18,11 @@ jq -rf parse_csv.jq $speedtest_log | tee -a speedtest_log.csv
 # Get important fields for easy reporting
 cut -d, -f1,2,4,12,5,8,11,12,19,22,26 speedtest_log.csv | tee speedtest_log_short.csv
 
-echo -e "\nCreating: speedtest_log.csv & speedtest_log_short.csv\n"
+echo -e "\nCreating speedtest_log.csv & speedtest_log_short.csv.. done\n"
 
 # Fixing timestamp, download.bandwidth, upload.bandwidth
 
-fix_csv="
+fix_csv_py="
 #!/usr/bin/env python
 #
 #
@@ -43,10 +43,12 @@ df['upload.bandwidth'] = df['upload.bandwidth'].div(125000)
 # Spit the output back to a new csv
 df.to_csv('speedtest_log_short_fixed.csv', index=False)
 "
+python -c "$fix_csv_py"
 
 echo -e "Convert timezone to Jakarta.. done
 	\nFixing download/upload from Bps to Mbps.. done
 	\nCheck speedtest_log*.csv"
+
 
 # NOTES:
 #
