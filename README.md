@@ -1,5 +1,7 @@
 # Does my ISP sucks?
 
+![](images/logo-250.png)
+
 My ISP sucks. Sometimes it sucks less longer, at random given time.
 
 How about yours?
@@ -12,4 +14,9 @@ Convert the `speedtest_log.json`, graph it, mail it to your ISP, publish it, etc
 
 > `ialexs`
 
-![](images/logo-250.png)
+---
+
+# Updates:
+
+- 27 July 2020.  Add `create_csv.sh`. For easy reporting in csv/spreadsheet format.
+
