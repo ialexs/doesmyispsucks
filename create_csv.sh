@@ -18,6 +18,7 @@ jq -rf parse_csv.jq $speedtest_log | tee -a speedtest_log.csv
 # Get important fields for easy reporting
 cut -d, -f1,2,4,12,5,8,11,12,19,22,26 speedtest_log.csv | tee speedtest_log_short.csv
 
+echo -e "\n..Check speedtest_log.csv & speedtest_log_short.csv\n"
 # NOTES:
 #
 # From `speedtest -help`:
