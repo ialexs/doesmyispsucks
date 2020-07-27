@@ -19,4 +19,4 @@ Convert the `speedtest_log.json`, graph it, mail it to your ISP, publish it, etc
 # Updates:
 
 - 27 July 2020.  Add `create_csv.sh`. For easy reporting in csv/spreadsheet format.
-
+- 28 July 2020. Add `create_csv.sh` with Python/Pandas to convert timestamp (from GMT+0 to Asia/Jakarta), upload/download (from Bps to Mbps)
