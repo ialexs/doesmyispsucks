@@ -62,9 +62,6 @@ tail speedtest_log_short_fixed.csv -n 1 | cut -d, -f 2,3,4,5,8,10 | tr ',' '\n' 
 echo -e "\n# Last result:"
 paste recentlog_field recentlog_value -d" "
 rm -rf recentlog_*
-echo -e "\n# Last result:"
-paste recentlog_field recentlog_value -d" "
-rm -rf recentlog_*
 
 echo -e "\n# Last 12hrs - 15 mins interval download bandwidth (Mbps)\n"
 cat speedtest_log_short_fixed.csv | cut -d, -f2,4 | tail -n 48 | jp -input csv -width 100 -height 10
