@@ -1,32 +1,35 @@
 #!/usr/bin/env bash
 #
+# https://github.com/ialexs/doesmyispsucks
+#
 # Reformat `speedtest_log.json` to
-# `speedtest_log.csv`, `speedtest_log_short.csv` (for easy reporting to ISP)
+# `speedtest_log.csv`, `speedtest_log_short.csv` `speedtest_log_short_fixed.csv`
+# (for easy reporting to ISP)
 #
-# Utilize `jq` https://stedolan.github.io/jq/
-#
-# /ialexs
+# Utilize:
+# - `jq` https://stedolan.github.io/jq/
+# - `jp` https://github.com/sgreben/jp
+# - Pandas
 
 speedtest_log='speedtest_log.json'
 
+parselog () {
 # Parse json as csv header
-jq -rf parse_header.jq $speedtest_log | head -n 1 | tee speedtest_log.csv
+jq -rf parse_header.jq $speedtest_log | head -n 1 > speedtest_log.csv
 
 # Parse json as csv content
-jq -rf parse_csv.jq $speedtest_log | tee -a speedtest_log.csv
+jq -rf parse_csv.jq $speedtest_log >> speedtest_log.csv
+echo -e "\nParsing $speedtest_log to speedtest_log.csv ...done"
 
 # Get important fields for easy reporting
-cut -d, -f1,2,4,12,5,8,11,12,19,22,26 speedtest_log.csv | tee speedtest_log_short.csv
+cut -d, -f1,2,4,12,5,8,11,12,19,22,26 speedtest_log.csv > speedtest_log_short.csv
+echo -e "Creating speedtest_log_short.csv ...done"
+}
 
-echo -e "\nCreating speedtest_log.csv & speedtest_log_short.csv.. done\n"
-
-# Fixing timestamp, download.bandwidth, upload.bandwidth
+# Fixing timestamp, download.bandwidth, upload.bandwidth. Using Pandas
 
 fix_csv_py="
 #!/usr/bin/env python
-#
-#
-# /ialexs
 
 import pandas as pd
 
@@ -42,14 +45,33 @@ df['upload.bandwidth'] = df['upload.bandwidth'].div(125000)
 
 # Spit the output back to a new csv
 df.to_csv('speedtest_log_short_fixed.csv', index=False)
+
+print('\nConvert timezone to Jakarta ...done\nFixing download/upload from Bps to Mbps ...done\n')
 "
+
+recentlog ()
+{
+echo -e "# Last three lines speedtest_log_short_fixed.csv"
+
+# Spit last 3 lines
+tail -n 3 speedtest_log_short_fixed.csv | cut -d, -f 2,3,4,5,8
+
+echo -e "Date:\nPing (ms):\nDownload (Mbps):\nUpload (Mbps):\nServer:\nSpeedtest URL:" > recentlog_field
+tail speedtest_log_short_fixed.csv -n 1 | cut -d, -f 2,3,4,5,8,10 | tr ',' '\n' > recentlog_value
+
+echo -e "\n# Last result:"
+paste recentlog_field recentlog_value -d" "
+rm -rf recentlog_*
+
+echo -e "\n# Last 12hrs - 15 mins interval download bandwidth (Mbps)\n"
+cat speedtest_log_short_fixed.csv | cut -d, -f2,4 | tail -n 48 | jp -input csv -width 100 -height 10
+}
+
+# miaw..
+parselog
 python -c "$fix_csv_py"
-
-echo -e "Convert timezone to Jakarta.. done
-	\nFixing download/upload from Bps to Mbps.. done
-	\nCheck speedtest_log*.csv"
-
-
+recentlog
+echo ""
 # NOTES:
 #
 # From `speedtest -help`:
