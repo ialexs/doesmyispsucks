@@ -59,25 +59,12 @@ tail -n 3 speedtest_log_short_fixed.csv | cut -d, -f 2,3,4,5,8
 echo -e "Date:\nPing (ms):\nDownload (Mbps):\nUpload (Mbps):\nServer:\nSpeedtest URL:" > recentlog_field
 tail speedtest_log_short_fixed.csv -n 1 | cut -d, -f 2,3,4,5,8,10 | tr ',' '\n' > recentlog_value
 
-<<<<<<< HEAD
 echo -e "\n# Last result:"
 paste recentlog_field recentlog_value -d" "
 rm -rf recentlog_*
-||||||| e503a91
-=======
 echo -e "\n# Last result:"
 paste recentlog_field recentlog_value -d" "
 rm -rf recentlog_*
-
-echo -e "\n# Last 12hrs - 15 mins interval download bandwidth (Mbps)\n"
-cat speedtest_log_short_fixed.csv | cut -d, -f2,4 | tail -n 48 | jp -input csv -width 100 -height 10
-}
-
-# miaw..
-parselog
-python -c "$fix_csv_py"
-recentlog
->>>>>>> 447f4fe3e3df0bf1754441026bfe1d2abc1ec9a3
 
 echo -e "\n# Last 12hrs - 15 mins interval download bandwidth (Mbps)\n"
 cat speedtest_log_short_fixed.csv | cut -d, -f2,4 | tail -n 48 | jp -input csv -width 100 -height 10
