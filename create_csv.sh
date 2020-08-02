@@ -6,10 +6,7 @@
 # `speedtest_log.csv`, `speedtest_log_short.csv` `speedtest_log_short_fixed.csv`
 # (for easy reporting to ISP)
 #
-# Utilize:
-# - `jq` https://stedolan.github.io/jq/
-# - `jp` https://github.com/sgreben/jp
-# - Pandas
+# Requirements in the README
 
 speedtest_log='speedtest_log.json'
 
@@ -46,32 +43,31 @@ df['upload.bandwidth'] = df['upload.bandwidth'].div(125000)
 # Spit the output back to a new csv
 df.to_csv('speedtest_log_short_fixed.csv', index=False)
 
-print('\nConvert timezone to Jakarta ...done\nFixing download/upload from Bps to Mbps ...done\n')
+print('\nConvert timezone, convert Bps to Mbps ...done\nCreating speedtest_log_short_fixed.csv ...done')
 "
 
 recentlog ()
 {
-echo -e "# Last three lines speedtest_log_short_fixed.csv"
-
-# Spit last 3 lines
-tail -n 3 speedtest_log_short_fixed.csv | cut -d, -f 2,3,4,5,8
-
-echo -e "Date:\nPing (ms):\nDownload (Mbps):\nUpload (Mbps):\nServer:\nSpeedtest URL:" > recentlog_field
-tail speedtest_log_short_fixed.csv -n 1 | cut -d, -f 2,3,4,5,8,10 | tr ',' '\n' > recentlog_value
-
-echo -e "\n# Last result:"
-paste recentlog_field recentlog_value -d" "
-rm -rf recentlog_*
+# Utilize csvlook (from csvkit) and `header`
+echo -e "\n# Last five entries:\n"
+cat speedtest_log_short_fixed.csv \
+	| cut -d, -f 2,3,4,5,10 \
+	| tail -n 5 \
+	| header -a "Date,Ping (ms),DL (Mbps),UL (Mbps),Speedtest URL Result" \
+	| csvlook
 
 echo -e "\n# Last 12hrs - 15 mins interval download bandwidth (Mbps)\n"
 cat speedtest_log_short_fixed.csv | cut -d, -f2,4 | tail -n 48 | jp -input csv -width 100 -height 10
 }
 
 # miaw..
+
+figlet -f small "Does My ISP Sucks?"
 parselog
 python -c "$fix_csv_py"
 recentlog
 echo ""
+
 # NOTES:
 #
 # From `speedtest -help`:
