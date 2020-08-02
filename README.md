@@ -17,6 +17,7 @@ Others:
 - JP https://github.com/sgreben/jp - To plot on scren chart
 - CSVKit https://csvkit.readthedocs.io/en/latest - Use 'csvlook' for a nice view of CSV
 - `header` a script by https://twitter.com/jeroenhjanssens - To easily put header in CSV
+- Figlet http://www.figlet.org/ - Banner
 
 > `ialexs`
 
