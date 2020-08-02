@@ -16,7 +16,7 @@ Others:
 - Pandas https://pandas.pydata.org - If want to transform the timezone (from GMT+0 to your local time), bandwidth (from Bps to Mbps)
 - JP https://github.com/sgreben/jp - To plot on scren chart
 - CSVKit https://csvkit.readthedocs.io/en/latest - Use 'csvlook' for a nice view of CSV
-- `header` a script by @jeroenjanssens - To easily put header in CSV
+- `header` a script by https://twitter.com/jeroenhjanssens - To easily put header in CSV
 
 > `ialexs`
 
@@ -24,7 +24,7 @@ Others:
 
 # Updates:
 
-- 02 Aug 2020 . Use 
+- 02 Aug 2020 . Use CSVKit 
 - 01 Aug 2020. Add on screen chart using `jp`
 - 28 Jul 2020. Add `create_csv.sh` with Python/Pandas to convert timestamp (from GMT+0 to Asia/Jakarta), upload/download (from Bps to Mbps)
 - 27 Jul 2020.  Add `create_csv.sh`. For easy reporting in csv/spreadsheet format.
