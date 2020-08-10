@@ -13,7 +13,7 @@
 
 # If error, we log as the same format as `speedtest`
 # (using Zulu time format)
-date=`date --utc +%FT%TZ`
+date=$(date --utc +%FT%TZ)
 
 speedtest_log='speedtest_log.json'
 speedtest_result='speedtest_result'
@@ -30,7 +30,7 @@ speedtesting () {
 
 	if [ -s "$speedtest_result" ]
 	then
-	       cat $speedtest_result | tee -a $speedtest_log
+	       tee -a $speedtest_log < $speedtest_result
 	       exit
        else
 	       echo "{\"type\":\"failed result\",\"timestamp\":\"$date\"}" | tee -a $speedtest_log

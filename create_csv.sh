@@ -57,12 +57,12 @@ cat speedtest_log_short_fixed.csv \
 	| csvlook
 
 echo -e "\n# Last 12hrs - 15 mins interval download bandwidth (Mbps)\n"
-cat speedtest_log_short_fixed.csv | cut -d, -f2,4 | tail -n 48 | jp -input csv -width 100 -height 10
+< speedtest_log_short_fixed.csv cut -d, -f2,4 | tail -n 48 | jp -input csv -width 100 -height 10 -canvas braille
 }
 
 # miaw..
 
-figlet -f small "Does My ISP Sucks?"
+figlet -f small "Does My ISP Sucks?" | lolcat
 parselog
 python -c "$fix_csv_py"
 recentlog
