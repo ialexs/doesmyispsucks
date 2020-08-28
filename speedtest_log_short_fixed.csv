@@ -1,0 +1,2 @@
+type,timestamp,ping.latency,download.bandwidth,upload.bandwidth,packetLoss,isp,server.name,server.host,result.url
+result,2020-08-02 02:12:21+07:00,9.966000000000001,27.867376,15.56664,0,FirstMedia,PT Parsaoran Global Datatrans,speedtest.hsp.net.id,https://www.speedtest.net/result/c/8603da71-571c-4646-9cfa-393c1dbfefa2
